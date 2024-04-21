@@ -33,7 +33,7 @@ def sendMsgToServer(user: str, userMsg: str):
     data = {
       'author': user, 
       'action': EventType.SEND_MESSAGE.value, 
-      'body': {
+      'payload': {
         'message': userMsg
       }
     }
@@ -42,7 +42,7 @@ def sendMsgToServer(user: str, userMsg: str):
     data = {
       'author': user,
       'action': EventType.DELETE_MESSAGE.value,
-      'body': {
+      'payload': {
           'id': id_to_delete
       }
     }

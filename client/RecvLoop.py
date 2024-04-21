@@ -1,5 +1,6 @@
 import logging
 import sys
+import os
 import time
 import yaml
 from watchdog.events import FileSystemEventHandler
@@ -10,6 +11,7 @@ GENERATED_CHAT_FILE = "../generated_chat.yaml"
 
 def recvLoop(user: str):
   logging.debug("Starting recvLoop")
+  update_chat_ui(user)
   listen_for_changes(user)
 
 def update_chat_ui(user: str):
@@ -19,13 +21,16 @@ def update_chat_ui(user: str):
     messages = yaml.safe_load(file)
   
   # update UI
-  print("\n====== UPDATING CHAT =======")
-  for msg in messages:
-    if msg['props'] is None: # regular messages will be stored in contents. All other event types, their properties would be in props, and content may be ignored
-      iamAuthor = user == msg['author']
-      print(f"{'Me' if iamAuthor else msg['author']}{' ' + msg['id'] if iamAuthor else ''}: {msg['contents']}")
-  print("====== CHAT UPDATED =======")
-  print("Enter your message: ", end="")
+  clear()
+  print("\n====== CHAT BEGIN =======")
+  if messages is not None:
+    for msg in messages:
+      if len(msg['flags']) == 0: # regular messages will be stored in contents. All other event types, their properties would be in props, and content may be ignored
+        iamAuthor = user == msg['author']
+        print(f"{'Me' if iamAuthor else msg['author']}{' [' + msg['id'] + ']' if True else ''}: {msg['contents']}")
+        
+  print("====== CHAT END =======")
+  print("Enter your message: ", end="", flush=True)
 
 class OnChangeHandler(FileSystemEventHandler):
   def __init__(self, user: str):
@@ -43,3 +48,6 @@ def listen_for_changes(user: str):
   while True:
     # we don't want this method to end until program ends (by other thread or ctrl+c)
     time.sleep(5)
+
+def clear():
+    os.system('clear')
