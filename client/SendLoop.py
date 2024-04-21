@@ -20,13 +20,32 @@ def sendLoop(user: str):
 def sendMsgToServer(user: str, userMsg: str):
   url = f"http://localhost:{PORT}"
   headers = {'Content-Type': 'application/json'}
-  data = {
-    'author': user, 
-    'action': EventType.SEND_MESSAGE.value, 
-    'body': {
-      'message': userMsg
+
+  id_to_delete = None
+  if (userMsg.startswith("delete")):
+    try:
+      id_to_delete = userMsg.split(" ")[1]
+    except IndexError:
+      print("Please provide a message ID to delete")
+
+  if id_to_delete is None:
+    # process sendMessage 
+    data = {
+      'author': user, 
+      'action': EventType.SEND_MESSAGE.value, 
+      'body': {
+        'message': userMsg
+      }
     }
-  }
+  else:
+    # process delete message
+    data = {
+      'author': user,
+      'action': EventType.DELETE_MESSAGE.value,
+      'body': {
+          'id': id_to_delete
+      }
+    }
   response = requests.patch(url, data=json.dumps(data), headers=headers)
 
   logging.debug(f"Response Status Code: {response.status_code}")

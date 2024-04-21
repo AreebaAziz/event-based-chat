@@ -32,7 +32,7 @@ def appendToEventLog(data):
 
   # now we need to write to the event_log
   timestamp = datetime.utcnow().timestamp()
-  id = str(uuid.uuid4())
+  id = str(uuid.uuid4())[:7]
   event = [{'id': id, 'timestamp': timestamp, **data}]
   yaml_string = yaml.dump(event)
 

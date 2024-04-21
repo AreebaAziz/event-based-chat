@@ -22,7 +22,7 @@ def main():
   logging.basicConfig(level=logging.DEBUG if debug else logging.INFO,
                       format='%(asctime)s - %(levelname)s - %(message)s')
   sendThread = threading.Thread(target=sendLoop, args=(user,))
-  recvThread = threading.Thread(target=recvLoop, daemon=True)
+  recvThread = threading.Thread(target=recvLoop, args=(user,), daemon=True)
   sendThread.start()
   recvThread.start()
   sendThread.join()

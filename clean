@@ -1,0 +1,2 @@
+#!/bin/zsh
+cat /dev/null > generated_chat.yaml > event_log.yaml

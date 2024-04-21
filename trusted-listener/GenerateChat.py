@@ -10,20 +10,21 @@ class EventType(Enum):
   DELETE_MESSAGE = "deleteMessage"
 
 class Message:
-  def __init__(self, author: str, timestamp: str):
+  def __init__(self, id: str, timestamp: str, author: str):
+    self.id = id
     self.author = author
     self.timestamp = timestamp
     self.contents = None
     self.props = None
 
 class SimpleMessage(Message):
-  def __init__(self, author: str, timestamp: str, message: str):
-    super().__init__(author, timestamp)
+  def __init__(self, id: str, timestamp: str, author: str, message: str):
+    super().__init__(author, timestamp, id)
     self.contents = message
 
 def generate_chat():
   logging.debug("Generating chat based on events")
-  generated_msgs = []
+  generated_msgs: list[Message] = []
 
   # first read the entire event log file in yaml
   with open(EVENT_LOG_FILE, 'r') as file:
@@ -36,7 +37,20 @@ def generate_chat():
     if (event['action'] == EventType.SEND_MESSAGE.value):
       logging.debug("Processing sendMessage event")
       # in case of sendMessage event, we just append this event to the list of messages
-      generated_msgs.append(SimpleMessage(event['action'], event['timestamp'], event['body']['message']))
+      generated_msgs.append(
+        SimpleMessage(
+            event['author'], 
+            event['timestamp'], 
+            event['id'],
+            event['body']['message'])
+          )
+    elif (event['action'] == EventType.DELETE_MESSAGE.value):
+      logging.debug("Processing deleteMessage event")
+      # in case of delete message, we must go through the generatedMsgs list and remove the item
+      # with the provided id
+      id_to_delete = event['body']['id']
+      # the deleted msg must already exist in the list as it must have come before this current event
+      generated_msgs = [msg for msg in generated_msgs if msg.id != id_to_delete]
 
   # now we have a generated list of processed messages. 
   # we can now use this generated list to write to the generated_chat file
