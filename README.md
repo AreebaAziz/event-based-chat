@@ -12,6 +12,11 @@
 1. Allow end-users to create channels with the hard delete option
 2. Allow custom events that can be interpreted in any way by the UI clients
 
+Notes: 
+- hard delete here means no record of the original message on storage
+- soft delete means end-users won't have access to the original message, but the original message would still be kept in storage (eg. for auditors - users can enable soft delete channels for security purposes)
+- we are ignoring the "data cascading" issue
+
 ### How it works
 
 - For every event in the chat, such as `sendMessage`, `deleteMessage`, `editMessage`, `event` (custom events), the client sends an HTTP PATCH with the event details.
@@ -40,29 +45,31 @@ With Solid, we can use the concept of "storage-local compute" to keep the compon
 ### Known issues with the concept
 
 1. Users need to trust the Pod Provider (or a Trusted Listener)
-  - for access to their data (event_log)
-  - for correctly re-constructing the messages into generated_chat => integrity 
+    - for read access to their data (`event_log`)
+    - for correctly re-constructing the messages into `generated_chat` => integrity 
 2. HTTP PATCH method may have a side effect? Although how the underlying data is stored on the server can be unknown to the client, so maybe it doesn't count as a side effect?
 3. Unsure about performance issues - how it may scale or handle high frequency of events. 
-  - Optimization in the Trusted Listener to efficiently generate the generated_chat file based on the latest event
-  - Optimization in the client UI to efficiently process all events in the generated chat. Eg. Could add another "storage-local compute" component that only sends the diff of the generated chat to the client UI instead of the whole chat. 
+    - Optimization needed in the Trusted Listener to efficiently generate the `generated_chat` file based on the latest event
+    - Optimization needed in the client UI to efficiently process all events in the generated chat. Eg. Could add another "storage-local compute" component that only sends the diff of the generated chat to the client UI instead of the whole chat. 
 4. Trusted Listener is needed to be reliable and always running, otherwise clients will not receive the latest updates. 
 
 ## Demo
 
+**If the GIFs are too slow, you can view the videos [here](https://drive.google.com/drive/folders/1oXkHwxQR6xyagbWM3JKwdIMfABKlcmx5?usp=sharing).**
+
 My terminals - what I will run on each pane:
 
 - The top two panes are the two clients
-- Middle panes are what would run on the server/Pod Provider (HTTP Server and Trusted Listener)
-- Bottom panes we look at the state of the files 
+- Middle panes are the server/Pod Provider (HTTP Server and Trusted Listener)
+- On the bottom panes we look at the state of the files 
 
-![Terminal panes](images/screenshot00.png)
+![Terminal panes](images/terminal-panes.png)
 
 ### Soft Delete Demo 
 
 ![Soft Delete demo 1](images/Demo1SoftDelete.gif)
 
-- notice that `generated_chat` gets rid of the original deleted messages, but `event_log` maintains the history
+- notice that the `generated_chat` gets rid of the original deleted messages, but `event_log` maintains the history
 
 Editing multiple times works as well.
 
