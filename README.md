@@ -115,7 +115,9 @@ With custom events, users could:
 - store metadata of calls, such as "UserA called UserB at this time"
 - share location data in-chat 
 - add in-chat reminders/social events 
-- etc! 
+- etc!
+
+Although I believe the current Solid Chat specs still make "custom events" possible through adding any custom property to a `Message`. 
 
 ### Server-side plugins for optimization/special events processing
 
@@ -123,5 +125,7 @@ Users could add server-side plugins to optimize the processing of special events
 
 ### Custom Trusted Listeners
 
+Users could create their own Trusted Listener or choose which community/organization-built Trusted Listener to use. There must be at least 1 Trusted Listener attached, otherwise there will be no updates written to the `generated_chat` file. 
+
 Maybe: Users can add a custom (or community-built) Trusted Listener to do additional actions on a new message? Eg. I send a message to my friend "you owe me $5" and my custom Trusted Listener reads that message as a special event, calls an AWS Lambda function that adds it to a separate database of who owes who how much money. Then my friend could easily say "paid back $5" and the custom Trusted Listener updates accordingly. 
-- we may still be able to do this by allowing an app to have read permissions on the `generated_chat` file on our Solid Pod, but there may be other cases where it is better (more optimized) to have a backend plugin that gets triggered on certain events as they occur. 
+- we may still be able to do this by allowing an app to have read permissions on the `generated_chat` file on our Solid Pod, but there may be other cases where it is better (more optimized) to have a backend plugin that gets triggered on certain events as they occur.
