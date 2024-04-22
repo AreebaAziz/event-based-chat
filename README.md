@@ -67,15 +67,21 @@ My terminals - what I will run on each pane:
 
 ### Soft Delete Demo 
 
+[Link to video](https://drive.google.com/file/d/1luYUodhoWqpHbmsMkwET_ckp2k17WteT/view?usp=drive_link)
+
 ![Soft Delete demo 1](images/Demo1SoftDelete.gif)
 
 - notice that the `generated_chat` gets rid of the original deleted messages, but `event_log` maintains the history
 
 Editing multiple times works as well.
 
+[Link to video](https://drive.google.com/file/d/1r9RqvM4JDzpcaBcdmnXlbgxj3Eexxydd/view?usp=drive_link)
+
 ![Editing multiple times](images/Demo1.5.gif)
 
 ### Hard Delete Demo
+
+[Link to video](https://drive.google.com/file/d/1uydW3ShxBhWwDGZK-VDguQgJS82doIDM/view?usp=drive_link)
 
 ![Hard Delete Demo](images/Demo2HardDelete.gif)
 
@@ -87,11 +93,15 @@ Editing multiple times works as well.
  
 It is very easy to add custom events and have the clients interpret them as needed. 
 
+[Link to video](https://drive.google.com/file/d/1E9Yx3JTfvVfSEtapkA0VC-AiukuKj28j/view?usp=drive_link)
+
 ![Theme Demo](images/Demo3Theme.gif)
 
 ### Group chats demo
 
 Note that for the demo we ignore permissions for additional members to join the chat. 
+
+[Link to video](https://drive.google.com/file/d/1-y1iJ4s8zWHgE9gTA11zwiycqJu2Ui1J/view?usp=drive_link)
 
 ![Group Chats Demo](images/Demo4GroupChats.gif)
 
