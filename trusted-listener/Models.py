@@ -6,6 +6,7 @@ class Flags(Enum):
 class EventType(Enum):
   SEND_MESSAGE = "sendMessage"
   DELETE_MESSAGE = "deleteMessage"
+  EDIT_MESSAGE = "editMessage"
 
 class Message:
   def __init__(self, id: str, timestamp: str, author: str):
@@ -47,10 +48,24 @@ class SimpleMessage(Message):
 class DeletedMessage(SimpleMessage):
   def __init__(self, id: str, timestamp: str, author: str):
     super().__init__(id, timestamp, author, "(deleted)")
+    self.flags.append("deleted")
 
   @classmethod
   def from_event(cls, data):
     return cls(data['id'], data['timestamp'], data['author'])
+
+  @classmethod
+  def from_genchat(cls, data):
+    return cls(data['id'], data['timestamp'], data['author'])
+
+class EditedMessage(SimpleMessage):
+  def __init__(self, id: str, timestamp: str, author: str, message: str):
+    super().__init__(id, timestamp, author, message + " (edited)")
+    self.flags.append("edited")
+
+  @classmethod
+  def from_event(cls, data):
+    return cls(data['id'], data['timestamp'], data['author'], data['payload']['message'])
 
   @classmethod
   def from_genchat(cls, data):

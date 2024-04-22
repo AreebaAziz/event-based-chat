@@ -30,28 +30,7 @@ def apply_incremental_event_log_changes() -> list[Message]:
   with open(EVENT_LOG_FILE, 'r') as file:
     events = yaml.safe_load(file)
 
-  generated_msgs: list[Message] = []
-  # go through each event and process accordingly
-  for event in events:
-    logging.debug('EVENT------ ')
-    logging.debug(event)
-    if (event['action'] == EventType.SEND_MESSAGE.value):
-      logging.debug("Processing sendMessage event")
-      # in case of sendMessage event, we just append this event to the list of messages
-      generated_msgs.append(SimpleMessage.from_event(event))
-    elif (event['action'] == EventType.DELETE_MESSAGE.value):
-      logging.debug("Processing deleteMessage event")
-      # in case of delete message, we must go through the generatedMsgs list and remove the item
-      # with the provided id
-      id_to_delete = event['payload']['id']
-      # the deleted msg must already exist in the list as it must have come before this current event
-      generated_msgs = [
-          msg if not (msg.id == id_to_delete and msg.author == event['author']) 
-                  else DeletedMessage.from_event(event)
-          for msg in generated_msgs
-      ]
-
-  return generated_msgs
+  return process_events(events)
 
 def apply_change_to_shallow_copy(events: list[dict]) -> list[Message]:
   # read the generated chat file instead and compute how the latest event changes the 
@@ -66,7 +45,17 @@ def apply_change_to_shallow_copy(events: list[dict]) -> list[Message]:
   if msgs_from_file is not None:
     generated_msgs = [Message.from_genchat(msg) for msg in msgs_from_file]
 
+  return process_events(events, existing_msgs=generated_msgs)
+
+def process_events(events: list[dict], existing_msgs: list[Message] = []) -> list[Message]:
+  generated_msgs: list[Message] = existing_msgs.copy()
+  # go through each event and process accordingly
+  if events is None:
+    return []
+
   for event in events:
+    logging.debug('EVENT------ ')
+    logging.debug(event)
     if (event['action'] == EventType.SEND_MESSAGE.value):
       logging.debug("Processing sendMessage event")
       # in case of sendMessage event, we just append this event to the list of messages
@@ -76,11 +65,21 @@ def apply_change_to_shallow_copy(events: list[dict]) -> list[Message]:
       # in case of delete message, we must go through the generatedMsgs list and remove the item
       # with the provided id
       id_to_delete = event['payload']['id']
-      # the deleted msg must already exist in the generated_msgs list
+      # the deleted msg must already exist in the list as it must have come before this current event
       generated_msgs = [
-            msg if not (msg.id == id_to_delete and msg.author == event['author']) 
-                    else DeletedMessage.from_event(event)
-            for msg in generated_msgs
-        ]
+          msg if not (msg.id == id_to_delete and msg.author == event['author'])
+          else DeletedMessage.from_event(event)
+          for msg in generated_msgs
+      ]
+    elif (event['action'] == EventType.EDIT_MESSAGE.value):
+      logging.debug("Processing editMessage event")
+      id_to_edit = event['payload']['id']
+      generated_msgs = [
+          msg if not (msg.id == id_to_edit and msg.author == event['author'])
+          else EditedMessage.from_event(event)
+          for msg in generated_msgs
+      ]
+    else:
+      logging.debug("No known event type found; will let clients interpret")
   
   return generated_msgs

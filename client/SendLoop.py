@@ -8,6 +8,7 @@ PORT = 3030
 class EventType(Enum):
   SEND_MESSAGE = "sendMessage"
   DELETE_MESSAGE = "deleteMessage"
+  EDIT_MESSAGE = "editMessage"
 
 def sendLoop(user: str):
   while True:
@@ -21,14 +22,38 @@ def sendMsgToServer(user: str, userMsg: str):
   url = f"http://localhost:{PORT}"
   headers = {'Content-Type': 'application/json'}
 
-  id_to_delete = None
   if (userMsg.startswith("delete")):
+    # process delete message
+    id_to_delete = None
     try:
       id_to_delete = userMsg.split(" ")[1]
     except IndexError:
       print("Please provide a message ID to delete")
+      return
 
-  if id_to_delete is None:
+    data = {
+      'author': user,
+      'action': EventType.DELETE_MESSAGE.value,
+      'payload': {
+          'id': id_to_delete
+      }
+    }
+  elif (userMsg.startswith("edit")):
+    # process edit message
+    words = userMsg.split(" ")
+    if len(words) < 3:
+      print("You need to provide an ID of the message followed by the new message")
+      return
+
+    data = {
+      'author': user,
+      'action': EventType.EDIT_MESSAGE.value,
+      'payload': {
+          'id': words[1],
+          'message': " ".join(words[2:])
+      }
+    }
+  else:
     # process sendMessage 
     data = {
       'author': user, 
@@ -37,15 +62,7 @@ def sendMsgToServer(user: str, userMsg: str):
         'message': userMsg
       }
     }
-  else:
-    # process delete message
-    data = {
-      'author': user,
-      'action': EventType.DELETE_MESSAGE.value,
-      'payload': {
-          'id': id_to_delete
-      }
-    }
+
   response = requests.patch(url, data=json.dumps(data), headers=headers)
 
   logging.debug(f"Response Status Code: {response.status_code}")

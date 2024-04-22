@@ -24,8 +24,11 @@ def update_chat_ui(user: str):
   clear()
   print("\n====== CHAT BEGIN =======")
   if messages is not None:
-    for msg in messages:
-      if len(msg['flags']) == 0: # regular messages will be stored in contents. All other event types, their properties would be in props, and content may be ignored
+    for msg in messages:      
+      # regular messages will be stored in contents. All other event types, their properties would be in props, and content may be ignored
+      # also, in this case we are simply writing the contents of a deleted or edited message. But other implementations
+      # may do something different, like hide a deleted message, or show a fancy UI for deleted/edited message.
+      if len(msg['flags']) == 0 or 'deleted' in msg['flags'] or 'edited' in msg['flags']:
         iamAuthor = user == msg['author']
         print(f"{'Me' if iamAuthor else msg['author']}{' [' + msg['id'] + ']' if True else ''}: {msg['contents']}")
         
