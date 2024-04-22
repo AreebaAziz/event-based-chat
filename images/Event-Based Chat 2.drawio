@@ -1,0 +1,115 @@
+<mxfile host="app.diagrams.net" modified="2024-04-22T06:44:58.878Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:124.0) Gecko/20100101 Firefox/124.0" etag="sCTxnV6V78wqme24ehtP" version="24.2.1" type="device">
+  <diagram name="Page-1" id="IN7_rBS2A9cxQsc0514O">
+    <mxGraphModel dx="2238" dy="1754" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0R4V0wBw5BGxg6Deb7WZ-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-80" y="-67.5" width="770" height="375" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-31" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="-30" y="65" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-1" value="User A" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="560" y="460" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-3" value="User B" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="70" y="450" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-8" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="420" as="sourcePoint" />
+            <mxPoint x="550" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-9" value="HTTP PATCH to append event" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="570" y="328" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-10" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.cloud_services_configuration_file;pointerEvents=1;" parent="1" vertex="1">
+          <mxGeometry x="402" y="130" width="47.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-11" value="event_log file" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="380.75" y="100" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-12" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.385;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530.05" y="250" as="sourcePoint" />
+            <mxPoint x="450" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-13" value="(soft delete channel)&lt;br&gt;APPEND" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="375.75" y="215" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-14" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.queue_generic;pointerEvents=1;rotation=-180;" parent="1" vertex="1">
+          <mxGeometry x="360.75" y="-20.000000000000007" width="110" height="37.37" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-17" value="fifo_queue" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="375.75" y="-50" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-18" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="550" y="240" as="sourcePoint" />
+            <mxPoint x="470" y="30" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-19" value="(hard delete channel)&lt;br&gt;ENQUEUE" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="495.75" y="95" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-20" value="HTTP Server" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="505.75" y="250" width="94.25" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-23" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" parent="1" target="PtsWdOWaA0RDiD22-pbD-33" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="10" as="sourcePoint" />
+            <mxPoint x="220" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-24" value="(hard delete channel)&lt;br&gt;DEQUEUE" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="180" y="3" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-25" value="" style="endArrow=classic;html=1;rounded=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" parent="1" target="PtsWdOWaA0RDiD22-pbD-33" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="390" y="160" as="sourcePoint" />
+            <mxPoint x="220" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-26" value="(soft delete channel)&lt;br&gt;READ on file change" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="210" y="150" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-27" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.cloud_services_configuration_file;pointerEvents=1;" parent="1" vertex="1">
+          <mxGeometry x="-20" y="200" width="47.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-28" value="generated_chat file" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="-60" y="170" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-29" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.508;entryY=-0.133;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="PtsWdOWaA0RDiD22-pbD-28" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="20" y="130" as="sourcePoint" />
+            <mxPoint x="130" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-30" value="COMPUTE" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="-20" y="105" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-32" value="Trusted Listener" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="29" y="65" width="112" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-33" value="LISTEN" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="150" y="90" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-35" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="80" y="430" as="sourcePoint" />
+            <mxPoint x="20" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PtsWdOWaA0RDiD22-pbD-36" value="Solid Live Update&lt;br&gt;LISTEN for changes" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="50" y="323" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0R4V0wBw5BGxg6Deb7WZ-2" value="Pod Provider with &quot;storage-local compute&quot;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-60" y="-40" width="282" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
