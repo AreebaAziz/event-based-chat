@@ -75,7 +75,7 @@ def process_events(events: list[dict], existing_msgs: list[Message] = []) -> lis
       logging.debug("Processing editMessage event")
       id_to_edit = event['payload']['id_to_edit']
       generated_msgs = [
-          msg if not (msg.id == id_to_edit and msg.author == event['author'])
+          msg if not (msg.id == id_to_edit and msg.author == event['author'] and "deleted" not in msg.flags)
           else EditedMessage.from_event(event)
           for msg in generated_msgs
       ]

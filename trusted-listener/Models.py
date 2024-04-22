@@ -9,13 +9,13 @@ class EventType(Enum):
   EDIT_MESSAGE = "editMessage"
 
 class Message:
-  def __init__(self, id: str, timestamp: str, author: str, contents: str = "", props: dict = {}, flags: list = [], **kwargs):
+  def __init__(self, id: str, timestamp: str, author: str, contents: str = "", props: dict = None, flags: list = None, **kwargs):
     self.id = id
     self.timestamp = timestamp
     self.author = author
     self.contents = contents
-    self.props = props
-    self.flags = flags
+    self.props = {} if props is None else props
+    self.flags = [] if flags is None else flags
 
   @classmethod
   def from_genchat(cls, data):
@@ -47,7 +47,8 @@ class SimpleMessage(Message):
 class DeletedMessage(SimpleMessage):
   def __init__(self, id: str, timestamp: str, author: str):
     super().__init__(id, timestamp, author, "(deleted)")
-    self.flags.append("deleted")
+    if "deleted" not in self.flags:
+      self.flags.append("deleted")
 
   @classmethod
   def from_event(cls, data):
@@ -58,9 +59,10 @@ class DeletedMessage(SimpleMessage):
     return cls(data['id'], data['timestamp'], data['author'])
 
 class EditedMessage(SimpleMessage):
-  def __init__(self, id: str, timestamp: str, author: str, message: str):
+  def __init__(self, id: str, timestamp: str, author: str, message: str, **kwargs):
     super().__init__(id, timestamp, author, message + " (edited)")
-    self.flags.append("edited")
+    if "edited" not in self.flags:
+      self.flags.append("edited")
 
   @classmethod
   def from_event(cls, data):
