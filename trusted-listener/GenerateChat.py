@@ -64,7 +64,7 @@ def process_events(events: list[dict], existing_msgs: list[Message] = []) -> lis
       logging.debug("Processing deleteMessage event")
       # in case of delete message, we must go through the generatedMsgs list and remove the item
       # with the provided id
-      id_to_delete = event['payload']['id']
+      id_to_delete = event['payload']['id_to_delete']
       # the deleted msg must already exist in the list as it must have come before this current event
       generated_msgs = [
           msg if not (msg.id == id_to_delete and msg.author == event['author'])
@@ -73,7 +73,7 @@ def process_events(events: list[dict], existing_msgs: list[Message] = []) -> lis
       ]
     elif (event['action'] == EventType.EDIT_MESSAGE.value):
       logging.debug("Processing editMessage event")
-      id_to_edit = event['payload']['id']
+      id_to_edit = event['payload']['id_to_edit']
       generated_msgs = [
           msg if not (msg.id == id_to_edit and msg.author == event['author'])
           else EditedMessage.from_event(event)

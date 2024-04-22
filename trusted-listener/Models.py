@@ -51,11 +51,11 @@ class DeletedMessage(SimpleMessage):
 
   @classmethod
   def from_event(cls, data):
-    return cls(data['id'], data['timestamp'], data['author'], **data['payload'])
+    return cls(data['id'], data['timestamp'], data['author'])
 
   @classmethod
   def from_genchat(cls, data):
-    return cls(data['id'], data['timestamp'], data['author'], **data['payload'])
+    return cls(data['id'], data['timestamp'], data['author'])
 
 class EditedMessage(SimpleMessage):
   def __init__(self, id: str, timestamp: str, author: str, message: str):

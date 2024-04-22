@@ -13,6 +13,11 @@ class EventType(Enum):
   EDIT_MESSAGE = "editMessage"
   EVENT = "event"
 
+class Commands(Enum):
+  DELETE_CMD = "delete"
+  EDIT_CMD = "edit"
+  THEME_CMD = "theme"
+
 def sendLoop(user: str):
   while True:
     userMsg = input("Enter your message: ")
@@ -25,7 +30,7 @@ def sendMsgToServer(user: str, userMsg: str):
   url = f"http://localhost:{PORT}"
   headers = {'Content-Type': 'application/json'}
 
-  if (userMsg.startswith("delete")):
+  if (userMsg.startswith(Commands.DELETE_CMD.value)):
     # process delete message
     id_to_delete = None
     try:
@@ -38,10 +43,10 @@ def sendMsgToServer(user: str, userMsg: str):
       'author': user,
       'action': EventType.DELETE_MESSAGE.value,
       'payload': {
-          'id': id_to_delete
+          'id_to_delete': id_to_delete
       }
     }
-  elif (userMsg.startswith("edit")):
+  elif (userMsg.startswith(Commands.EDIT_CMD.value)):
     # process edit message
     words = userMsg.split(" ")
     if len(words) < 3:
@@ -52,11 +57,11 @@ def sendMsgToServer(user: str, userMsg: str):
       'author': user,
       'action': EventType.EDIT_MESSAGE.value,
       'payload': {
-          'id': words[1],
+          'id_to_edit': words[1],
           'message': " ".join(words[2:])
       }
     }
-  elif (userMsg.startswith("theme")):
+  elif (userMsg.startswith(Commands.THEME_CMD.value)):
     # change the theme!
     words = userMsg.split(" ")
     if len(words) < 2 or words[1] not in colour_codes:
