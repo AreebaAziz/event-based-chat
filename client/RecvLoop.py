@@ -7,6 +7,8 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 from watchdog.observers.polling import PollingObserver
 
+from common import colour_codes
+
 GENERATED_CHAT_FILE = "../generated_chat.yaml"
 
 def recvLoop(user: str):
@@ -29,11 +31,17 @@ def update_chat_ui(user: str):
       # also, in this case we are simply writing the contents of a deleted or edited message. But other implementations
       # may do something different, like hide a deleted message, or show a fancy UI for deleted/edited message.
       if len(msg['flags']) == 0 or 'deleted' in msg['flags'] or 'edited' in msg['flags']:
-        iamAuthor = user == msg['author']
-        print(f"{'Me' if iamAuthor else msg['author']}{' [' + msg['id'] + ']' if True else ''}: {msg['contents']}")
+        print(__get_str_with_me_as_author(msg, user))
+      elif 'theme' in msg['flags']:
+        print(f"---- {msg['author']} changed the theme to {msg['props']['colour']} -----")
+        print("\033[0m" + colour_codes[msg['props']['colour']], end="")
         
   print("====== CHAT END =======")
   print("Enter your message: ", end="", flush=True)
+
+def __get_str_with_me_as_author(msg, user) -> str:
+  iamAuthor = user == msg['author']
+  return f"{'Me' if iamAuthor else msg['author']}{' [' + msg['id'] + ']' if True else ''}: {msg['contents']}"
 
 class OnChangeHandler(FileSystemEventHandler):
   def __init__(self, user: str):

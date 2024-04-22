@@ -3,12 +3,15 @@ import requests
 import json
 import logging
 
+from common import colour_codes
+
 PORT = 3030
 
 class EventType(Enum):
   SEND_MESSAGE = "sendMessage"
   DELETE_MESSAGE = "deleteMessage"
   EDIT_MESSAGE = "editMessage"
+  EVENT = "event"
 
 def sendLoop(user: str):
   while True:
@@ -51,6 +54,22 @@ def sendMsgToServer(user: str, userMsg: str):
       'payload': {
           'id': words[1],
           'message': " ".join(words[2:])
+      }
+    }
+  elif (userMsg.startswith("theme")):
+    # change the theme!
+    words = userMsg.split(" ")
+    if len(words) < 2 or words[1] not in colour_codes:
+      print("You need to provide a valid colour for the theme!!")
+      return
+    data = {
+      'author': user,
+      'action': EventType.EVENT.value,
+      'payload': {
+        'flags': ['theme'],
+        'props': {
+          'colour': words[1]
+        }
       }
     }
   else:

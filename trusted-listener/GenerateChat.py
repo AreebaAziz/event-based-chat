@@ -81,5 +81,6 @@ def process_events(events: list[dict], existing_msgs: list[Message] = []) -> lis
       ]
     else:
       logging.debug("No known event type found; will let clients interpret")
+      generated_msgs.append(Message(event['id'], event['timestamp'], event['author'], **event['payload']))
   
   return generated_msgs
