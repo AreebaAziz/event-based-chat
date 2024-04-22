@@ -110,10 +110,9 @@ Note that for the demo we ignore permissions for additional members to join the 
 ### Ideas for custom events
 
 With custom events, users could:
-- build custom in-chat games (turn-based, mainly, but could add widgets for externally-hosted games?), such as tic-tac-toe, Mastermind, Chess, card games, etc! 
+- build custom in-chat games (turn-based mainly, but could add widgets for externally-hosted games?), such as tic-tac-toe, Mastermind, Chess, card games, etc! 
   - for optimization, users can build server-side plugins that would attach to the Trusted Listener and optimize the processing of game events
 - store metadata of calls, such as "UserA called UserB at this time"
-- add fun UI reactions given certain keywords in a message. Example: you enter "I love you!" and the UI displays a bunch of heart emojis. 
 - share location data in-chat 
 - add in-chat reminders/social events 
 - etc! 
@@ -124,5 +123,5 @@ Users could add server-side plugins to optimize the processing of special events
 
 ### Custom Trusted Listeners
 
-Maybe: Users can add a custom (or community-built) Trusted Listener to do additional things on a new message? Eg. I send a message to my friend "you owe me $5" and my custom Trusted Listener reads that message as a special event, calls an AWS Lambda function that adds it to a separate database of who owes who how much money. Then my friend could easily say "paid back $5" and the custom Trusted Listener updates accordingly. 
-- we may still be able to do this by allowing an app to have read permissions on the `generated_chat` file on our Solid Pod, but there may be cases where it is better (more optimized) to have a backend plugin that gets triggered on certain events as they occur. 
+Maybe: Users can add a custom (or community-built) Trusted Listener to do additional actions on a new message? Eg. I send a message to my friend "you owe me $5" and my custom Trusted Listener reads that message as a special event, calls an AWS Lambda function that adds it to a separate database of who owes who how much money. Then my friend could easily say "paid back $5" and the custom Trusted Listener updates accordingly. 
+- we may still be able to do this by allowing an app to have read permissions on the `generated_chat` file on our Solid Pod, but there may be other cases where it is better (more optimized) to have a backend plugin that gets triggered on certain events as they occur. 
