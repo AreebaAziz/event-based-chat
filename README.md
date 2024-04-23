@@ -46,7 +46,8 @@ With Solid, we can use the concept of "storage-local compute" to keep the compon
 
 1. Users need to trust the Pod Provider (or a Trusted Listener)
     - for read access to their data (`event_log`)
-    - for correctly re-constructing the messages into `generated_chat` => integrity 
+    - for correctly re-constructing the messages into `generated_chat` => integrity
+    - however, they may choose the Trusted Listener to use for their chats
 2. HTTP PATCH method may have a side effect? Although how the underlying data is stored on the server can be unknown to the client, so maybe it doesn't count as a side effect?
 3. Trusted Listener is needed to be reliable and always running, otherwise clients will not receive the latest updates. 
 4. Unsure about performance issues - how it may scale or handle high frequency of events. 
