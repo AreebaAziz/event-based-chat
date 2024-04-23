@@ -19,6 +19,8 @@ Notes:
 
 ### How it works
 
+![Diagram 1](images/EventBasedChat1.png)
+
 - For every event in the chat, such as `sendMessage`, `deleteMessage`, `editMessage`, `event` (custom events), the client sends an HTTP PATCH with the event details.
 - On an HTTP PATCH request, the HTTP server either: 
   - (soft-delete channel) appends the event to an `event_log` file
@@ -28,8 +30,6 @@ Notes:
   - (hard-delete channel) listens to the `fifo_queue` and dequeues as events arrive
 - Upon receiving a new event through either `event_log` or `fifo_queue`, the Trusted Listener re-constructs the `generated_chat` file with the new event data
 - The clients have a live connection going to watch for updates on the `generated_chat` file. Eg. Solid Live Update. They update the UI accordingly
-
-![Diagram 1](images/EventBasedChat1.png)
 
 With Solid, we can use the concept of "storage-local compute" to keep the components within the Pod Provider as shown below. Or it can also be in a distributed system. 
 
@@ -48,10 +48,10 @@ With Solid, we can use the concept of "storage-local compute" to keep the compon
     - for read access to their data (`event_log`)
     - for correctly re-constructing the messages into `generated_chat` => integrity 
 2. HTTP PATCH method may have a side effect? Although how the underlying data is stored on the server can be unknown to the client, so maybe it doesn't count as a side effect?
-3. Unsure about performance issues - how it may scale or handle high frequency of events. 
+3. Trusted Listener is needed to be reliable and always running, otherwise clients will not receive the latest updates. 
+4. Unsure about performance issues - how it may scale or handle high frequency of events. 
     - Optimization needed in the Trusted Listener to efficiently generate the `generated_chat` file based on the latest event
     - Optimization needed in the client UI to efficiently process all events in the generated chat. Eg. Could add another "storage-local compute" component that only sends the diff of the generated chat to the client UI instead of the whole chat. 
-4. Trusted Listener is needed to be reliable and always running, otherwise clients will not receive the latest updates. 
 
 ## Demo
 
