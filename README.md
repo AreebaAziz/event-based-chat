@@ -1,5 +1,7 @@
 # Exercise: event-based chat
 
+This demo is for https://github.com/solid/chat/issues/6
+
 ## Contents
 
 1. Overview
